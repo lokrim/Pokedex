@@ -2,31 +2,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-
-function getRandomPokemonIds(count: number, max: number = 1025): number[] {
-  const ids: number[] = [];
-  while (ids.length < count) {
-    const id = Math.floor(Math.random() * max) + 1;
-    if (!ids.includes(id)) {
-      ids.push(id);
-    }
-  }
-  return ids;
-}
-
-interface Pokemon {
-  id: number;
-  name: string;
-  sprites: {
-    front_default: string;
-  };
-  types: {
-    slot: number;
-    type: {
-      name: string;
-    };
-  }[];
-}
+import { getRandomPokemon } from "@/lib/api";
+import type { Pokemon } from "@/lib/types";
 
 export default function PokeGrid() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
@@ -34,25 +11,19 @@ export default function PokeGrid() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchRandomPokemon() {
+    async function loadPokemon() {
       try {
-        const randomIds = getRandomPokemonIds(100);
-        const pokemonPromises = randomIds.map((id) =>
-          fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-            .then((res) => {
-              if (!res.ok) throw new Error(`Failed to fetch Pokémon #${id}`);
-              return res.json();
-            })
-        );
-        const pokemonData = await Promise.all(pokemonPromises);
-        setPokemon(pokemonData);
+        // Use the API function instead of implementing fetching logic here
+        const data = await getRandomPokemon(20);
+        setPokemon(data);
       } catch (err: any) {
         setError(err.message);
       } finally {
         setLoading(false);
       }
     }
-    fetchRandomPokemon();
+
+    loadPokemon();
   }, []);
 
   if (loading)
@@ -73,12 +44,13 @@ export default function PokeGrid() {
               <Image
                 src={
                   p.sprites.front_default ||
-                  `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.id}.png`
+                  `/images/pokemon-placeholder.png`
                 }
                 alt={p.name}
                 width={120}
                 height={120}
                 className="object-contain"
+                unoptimized
               />
             </div>
             <div className="p-5">
@@ -127,7 +99,7 @@ export default function PokeGrid() {
   );
 }
 
-// Helper function to get color based on Pokémon type
+// Keep the helper function in the component since it's UI related
 function getTypeColor(type: string): string {
   const typeColors: Record<string, string> = {
     normal: "#A8A77A",
