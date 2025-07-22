@@ -13,7 +13,6 @@ export default function PokeGrid() {
   useEffect(() => {
     async function loadPokemon() {
       try {
-        // Use the API function instead of implementing fetching logic here
         const data = await getRandomPokemon(20);
         setPokemon(data);
       } catch (err: any) {
@@ -38,9 +37,9 @@ export default function PokeGrid() {
         {pokemon.map((p) => (
           <div
             key={p.id}
-            className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow dark:bg-gray-800 dark:border-gray-700"
+            className="max-w-sm border rounded-lg shadow-sm hover:shadow-md transition-shadow bg-gray-800 border-gray-700"
           >
-            <div className="flex justify-center pt-4 bg-gray-50 rounded-t-lg dark:bg-gray-700">
+            <div className="flex justify-center pt-4 rounded-t-lg bg-gray-700">
               <Image
                 src={
                   p.sprites.front_default ||
@@ -54,7 +53,7 @@ export default function PokeGrid() {
               />
             </div>
             <div className="p-5">
-              <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 capitalize dark:text-white">
+              <h5 className="mb-2 text-xl font-bold tracking-tight capitalize text-white">
                 #{p.id} {p.name}
               </h5>
               <div className="mb-3 flex gap-2">
@@ -72,7 +71,7 @@ export default function PokeGrid() {
               </div>
               <Link
                 href={`/pokemon/${p.id}`}
-                className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none  bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"
               >
                 View details
                 <svg

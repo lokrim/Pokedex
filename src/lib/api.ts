@@ -24,7 +24,7 @@ export async function getPokemonDetails(name: string): Promise<Pokemon> {
   return response.json();
 }
 
-export async function getRandomPokemon(count: number = 20, max: number = 151): Promise<Pokemon[]> {
+export async function getRandomPokemon(count: number = 20, max: number = 1025): Promise<Pokemon[]> {
   try {
     const randomIds = getRandomPokemonIds(count, max);
     

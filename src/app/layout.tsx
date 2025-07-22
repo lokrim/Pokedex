@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ThemeButton from "@/components/theme-button";
+import { Providers } from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <body
         className="min-h-screen"
         style={{
@@ -33,12 +35,12 @@ export default function RootLayout({
           backgroundAttachment: "fixed",
         }}
       >
-        <div className="bg-gray-50/90 dark:bg-gray-900/90 text-gray-900 dark:text-gray-50 min-h-screen">
-          <header className="w-full py-6 flex justify-center border-b border-gray-200 dark:border-gray-800 mb-8">
-            <h1 className="text-3xl font-bold tracking-tight">Pokédex</h1>
-          </header>
-          {children}
-        </div>
+          <div className="bg-gray-900/90 text-gray-50 min-h-screen">
+            <header className="w-full py-6 flex justify-center items-center gap-4 border-b border-gray-800 mb-8">
+              <h1 className="text-3xl font-bold tracking-tight">Pokédex</h1>
+            </header>
+            {children}
+          </div>
       </body>
     </html>
   );
